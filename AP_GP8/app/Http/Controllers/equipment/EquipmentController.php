@@ -71,7 +71,14 @@ class EquipmentController extends Controller
         $prefillFacilityId = $request->query('facility_id');
         $usageDomains = Equipment::USAGE_DOMAINS;
         $supportPhases = Equipment::SUPPORT_PHASES;
-        return view('equipment.create', compact('prefillFacilityId', 'usageDomains', 'supportPhases'));
+        $facilities = Facility::orderBy('name')->get();
+
+        return view('equipment.create', compact(
+            'prefillFacilityId',
+            'usageDomains',
+            'supportPhases',
+            'facilities'
+        ));
     }
 
     /**
@@ -110,7 +117,8 @@ class EquipmentController extends Controller
     {
         $usageDomains = Equipment::USAGE_DOMAINS;
         $supportPhases = Equipment::SUPPORT_PHASES;
-        return view('equipment.edit', compact('equipment', 'usageDomains', 'supportPhases'));
+        $facilities = Facility::orderBy('name')->get(); // <-- Add this
+        return view('equipment.edit', compact('equipment', 'usageDomains', 'supportPhases', 'facilities'));
     }
 
     /**
